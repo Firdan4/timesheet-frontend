@@ -6,7 +6,7 @@ const Navigation = () => {
   const route = useRoutes();
 
   return (
-    <div className="shadow w-full px-2 sm:px-9 flex flex-col items-stretch justify-between h-16 sm:h-20">
+    <div className="shadow w-full px-2 sm:px-9 flex flex-col items-stretch justify-between h-16 sm:h-20 bg-white rounded">
       <h1 className="text-lg font-semibold text-gray-600">HH Timesheet</h1>
       <nav className="relative px-4 font-bold flex gap-3">
         {route?.map((prev) => (

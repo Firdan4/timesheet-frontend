@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import Header from "./components/Header";
+import Header from "./components/header/Header";
 import { Activities } from "./page/Activities";
 
 const router = createBrowserRouter([
@@ -24,7 +24,8 @@ const router = createBrowserRouter([
     path: "/pengaturan",
     element: (
       <Header>
-        <Activities />
+        {/* <Activities /> */}
+        <div>Pengaturan</div>
       </Header>
     ),
   },

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import HeaderContent from "./HeaderContent";
-import Navigation from "./nav/Navigation";
+import Navigation from "../nav/Navigation";
+import HeaderItem from "./HeaderItem";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -8,17 +8,17 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ children }) => {
   return (
-    <>
+    <div className="p-1 bg-new-background-page h-screen">
       <header className="flex flex-col items-center justify-between w-full gap-1">
-        <HeaderContent />
+        <HeaderItem />
 
         <Navigation />
       </header>
 
-      <div className="pl-3 sm:pl-10 bg-new-background-page w-full">
+      <div className="flex flex-col gap-[2px] w-full p-3 sm:px-6 ">
         {children}
       </div>
-    </>
+    </div>
   );
 };
 
