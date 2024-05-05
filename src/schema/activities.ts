@@ -22,10 +22,14 @@ const activitieSchema = z.object({
     })
     .time(),
   activitieName: z
-    .string()
+    .string({
+      message: "Activitie name is Required",
+    })
     .min(5, { message: "Must be 5 or more characters long" }),
   projectName: z
-    .string()
+    .string({
+      message: "Project name is Required!",
+    })
     .min(5, { message: "Must be 5 or more characters long" }),
 });
 

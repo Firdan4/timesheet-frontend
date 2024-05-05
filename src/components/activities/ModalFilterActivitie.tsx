@@ -21,7 +21,7 @@ const ModalFilterActivitie = () => {
           <IoFilterSharp size={20} className="text-new-red" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] flex flex-col gap-5">
+      <DialogContent className="max-w-[90%] rounded-md sm:max-w-[425px] flex flex-col gap-5">
         <DialogHeader>
           <DialogTitle>Filter</DialogTitle>
           <span className="flex w-full h-[1px] bg-gray-300" />

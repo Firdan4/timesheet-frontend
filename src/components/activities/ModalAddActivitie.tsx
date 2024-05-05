@@ -8,6 +8,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import FormAddActivitie from "./FormAddActivitie";
+import { DialogOverlay } from "@radix-ui/react-dialog";
 
 const ModalAddActivitie = () => {
   return (
@@ -21,15 +22,17 @@ const ModalAddActivitie = () => {
           <p className="text-xs">Tambah Kegiatan</p>
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[85%] lg:max-w-[60%] rounded">
-        <DialogHeader>
-          <DialogTitle>Tambah Kegiatan Baru</DialogTitle>
-          <span className="flex w-full h-[1px] bg-gray-300" />
-        </DialogHeader>
+      <DialogOverlay className="h-screen overflow-y-auto relative">
+        <DialogContent className="max-w-[85%] lg:max-w-[60%] rounded max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Tambah Kegiatan Baru</DialogTitle>
+            <span className="flex w-full h-[1px] bg-gray-300" />
+          </DialogHeader>
 
-        {/* component form add activities */}
-        <FormAddActivitie />
-      </DialogContent>
+          {/* component form add activities */}
+          <FormAddActivitie />
+        </DialogContent>
+      </DialogOverlay>
     </Dialog>
   );
 };

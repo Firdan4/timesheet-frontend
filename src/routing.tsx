@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Header from "./components/header/Header";
 import { Activities } from "./page/Activities";
+import Settings from "./page/Settings";
 
 const router = createBrowserRouter([
   {
@@ -24,8 +25,7 @@ const router = createBrowserRouter([
     path: "/pengaturan",
     element: (
       <Header>
-        {/* <Activities /> */}
-        <div>Pengaturan</div>
+        <Settings />
       </Header>
     ),
   },
