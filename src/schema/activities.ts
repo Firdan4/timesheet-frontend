@@ -3,7 +3,8 @@ import { z } from "zod";
 const activitieSchema = z.object({
   dateStart: z
     .string({
-      required_error: "Date start is required!",
+      required_error: "Please select a date and time",
+      invalid_type_error: "That's not a date!",
     })
     .date(),
   dateEnd: z
@@ -30,7 +31,7 @@ const activitieSchema = z.object({
     .string({
       message: "Project name is Required!",
     })
-    .min(5, { message: "Must be 5 or more characters long" }),
+    .min(1, { message: "Project name is Required!" }),
 });
 
 export { activitieSchema };

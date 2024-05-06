@@ -1,6 +1,8 @@
 import { Activitie } from "@/type";
-import React, { FC } from "react";
+import { FC } from "react";
 import { TableCell, TableRow } from "../ui/table";
+import { formatDate } from "@/lib/dateFormat";
+import { calculateDuration } from "@/lib/utils";
 
 const ContentActivitiTableContent: FC<Activitie> = ({
   activitiName,
@@ -15,12 +17,14 @@ const ContentActivitiTableContent: FC<Activitie> = ({
     <TableRow key={activitiName}>
       <TableCell className="font-medium ">{activitiName}</TableCell>
       <TableCell className="">{projectName}</TableCell>
-      <TableCell className="">{dateStart}</TableCell>
-      <TableCell className="">{dateEnd}</TableCell>
-      <TableCell className="text-right ">{timeStart}</TableCell>
-      <TableCell className="text-right ">{timeEnd}</TableCell>
-      <TableCell className="text-right ">{duration}</TableCell>
-      <TableCell className="text-right ">{duration}</TableCell>
+      <TableCell className="">{formatDate(dateStart)}</TableCell>
+      <TableCell className="">{formatDate(dateEnd)}</TableCell>
+      <TableCell className=" ">{timeStart}</TableCell>
+      <TableCell className=" ">{timeEnd}</TableCell>
+      <TableCell className=" ">
+        {calculateDuration(timeStart, timeEnd)}
+      </TableCell>
+      <TableCell className=" ">{duration}</TableCell>
     </TableRow>
   );
 };

@@ -13,8 +13,28 @@ import { Input } from "../ui/input";
 import { activitieSchema } from "@/schema/activities";
 import { DialogClose, DialogFooter } from "../ui/dialog";
 import { Button } from "../ui/button";
+import { useMutationActivities } from "@/hooks/useActivities";
+import { useQueryProjeect } from "@/hooks/useProject";
+import { FC, useState } from "react";
+import { OptionTypes } from "@/type";
 
-const FormAddActivitie = () => {
+interface FormAddActivitieProps {
+  setVisibleFormAddProject: React.Dispatch<React.SetStateAction<boolean>>;
+  setVisibleFormAddActivitie: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const FormAddActivitie: FC<FormAddActivitieProps> = ({
+  setVisibleFormAddProject,
+  setVisibleFormAddActivitie,
+}) => {
+  const { useGetAllProject } = useQueryProjeect();
+  const [optionProject, setOptionProject] = useState<OptionTypes[]>([]);
+  const [selectedValue, setSelectedValue] = useState<string>("");
+
+  useGetAllProject(setOptionProject);
+
+  const { createActivity } = useMutationActivities();
+
   const form = useForm<z.infer<typeof activitieSchema>>({
     resolver: zodResolver(activitieSchema),
     defaultValues: {
@@ -26,9 +46,24 @@ const FormAddActivitie = () => {
       timeStart: "",
     },
   });
+
+  const handleSelect = (value: string) => {
+    if (!value) {
+      setVisibleFormAddProject(true);
+    }
+
+    setSelectedValue(value);
+    form.setValue("projectName", value);
+  };
+
+  const onSubmit = (value: z.infer<typeof activitieSchema>) => {
+    createActivity.mutate(value);
+    setVisibleFormAddActivitie(false);
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(() => {})} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="flex gap-5 w-full items-center justify-between flex-wrap sm:flex-nowrap">
           <FormField
             control={form.control}
@@ -63,7 +98,7 @@ const FormAddActivitie = () => {
               <FormItem>
                 <FormLabel>Waktu Mulai</FormLabel>
                 <FormControl>
-                  <Input {...field} type="time" />
+                  <Input {...field} type="time" step="1" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -76,7 +111,7 @@ const FormAddActivitie = () => {
               <FormItem>
                 <FormLabel>Waktu Selesai</FormLabel>
                 <FormControl>
-                  <Input {...field} type="time" />
+                  <Input {...field} type="time" step="1" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -99,11 +134,27 @@ const FormAddActivitie = () => {
         <FormField
           control={form.control}
           name="projectName"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel>Nama Proyek</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <select
+                  value={selectedValue}
+                  onChange={(e) => handleSelect(e.target.value)}
+                  className="w-full border rounded-md p-2"
+                >
+                  <option value="" disabled selected hidden></option>
+                  <option value="" className="text-new-red">
+                    <Button>
+                      <span className="text-lg">+</span> Tambah Proyek
+                    </Button>
+                  </option>
+                  {optionProject?.map((prev) => (
+                    <option value={prev.label} className="m-2">
+                      {prev.label}
+                    </option>
+                  ))}
+                </select>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -112,11 +163,19 @@ const FormAddActivitie = () => {
 
         <DialogFooter>
           <DialogClose>
-            <Button variant={"link"} className="text-new-red">
+            <Button
+              variant={"link"}
+              disabled={createActivity.isLoading}
+              className="text-new-red"
+            >
               Kembali
             </Button>
           </DialogClose>
-          <Button type="submit" className="bg-new-red">
+          <Button
+            type="submit"
+            disabled={createActivity.isLoading}
+            className="bg-new-red"
+          >
             Save changes
           </Button>
         </DialogFooter>

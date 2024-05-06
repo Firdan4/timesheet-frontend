@@ -2,84 +2,25 @@ import HeaderActivities from "@/components/activities/HeaderActivities";
 import ContentHeaderActivities from "@/components/activities/ContentHeaderActivities";
 import ContentFooterActivitie from "@/components/activities/ContentFooterActivitie";
 import ContentActivitie from "@/components/activities/ContentActivitie";
-import { Activitie } from "@/type";
-
-const invoices: Activitie[] = [
-  // {
-  //   activitiName: "INV001",
-  //   projectName: "INV001",
-  //   dateStart: "Paid",
-  //   dateEnd: "$250.00",
-  //   timeStart: "Credit Card",
-  //   timeEnd: "Credit Card",
-  //   duration: "Credit Card",
-  // },
-  // {
-  //   activitiName: "INV001",
-  //   projectName: "INV001",
-  //   dateStart: "Paid",
-  //   dateEnd: "$250.00",
-  //   timeStart: "Credit Card",
-  //   timeEnd: "Credit Card",
-  //   duration: "Credit Card",
-  // },
-  // {
-  //   activitiName: "INV001",
-  //   projectName: "INV001",
-  //   dateStart: "Paid",
-  //   dateEnd: "$250.00",
-  //   timeStart: "Credit Card",
-  //   timeEnd: "Credit Card",
-  //   duration: "Credit Card",
-  // },
-  // {
-  //   activitiName: "INV001",
-  //   projectName: "INV001",
-  //   dateStart: "Paid",
-  //   dateEnd: "$250.00",
-  //   timeStart: "Credit Card",
-  //   timeEnd: "Credit Card",
-  //   duration: "Credit Card",
-  // },
-  // {
-  //   activitiName: "INV001",
-  //   projectName: "INV001",
-  //   dateStart: "Paid",
-  //   dateEnd: "$250.00",
-  //   timeStart: "Credit Card",
-  //   timeEnd: "Credit Card",
-  //   duration: "Credit Card",
-  // },
-  // {
-  //   activitiName: "INV001",
-  //   projectName: "INV001",
-  //   dateStart: "Paid",
-  //   dateEnd: "$250.00",
-  //   timeStart: "Credit Card",
-  //   timeEnd: "Credit Card",
-  //   duration: "Credit Card",
-  // },
-  // {
-  //   activitiName: "INV001",
-  //   projectName: "INV001",
-  //   dateStart: "Paid",
-  //   dateEnd: "$250.00",
-  //   timeStart: "Credit Card",
-  //   timeEnd: "Credit Card",
-  //   duration: "Credit Card",
-  // },
-  // {
-  //   activitiName: "INV001",
-  //   projectName: "INV001",
-  //   dateStart: "Paid",
-  //   dateEnd: "$250.00",
-  //   timeStart: "Credit Card",
-  //   timeEnd: "Credit Card",
-  //   duration: "Credit Card",
-  // },
-];
+import { useQueryActivities } from "@/hooks/useActivities";
+import { useState } from "react";
+import { z } from "zod";
+import { activitieSchema } from "@/schema/activities";
+import { useDebounce } from "@/utils/useDebounce";
 
 export const Activities = () => {
+  const { useGetActivities } = useQueryActivities();
+
+  const [dataActivities, setDataActivities] = useState<
+    z.infer<typeof activitieSchema>[]
+  >([]);
+
+  const [search, setSearch] = useState<string>("");
+  const debounceSearch = useDebounce(search, 500);
+
+  // query get activities
+  useGetActivities(setDataActivities, debounceSearch);
+
   return (
     <>
       <div className="flex gap-20 w-full bg-white rounded-t-xl p-5">
@@ -87,11 +28,11 @@ export const Activities = () => {
         <HeaderActivities label="Rate" content="Rp. 12,000/jam" />
       </div>
       <div className="flex flex-col gap-2 w-full bg-white rounded-b-xl p-5 h-full">
-        <ContentHeaderActivities />
+        <ContentHeaderActivities setSearch={setSearch} />
 
-        <ContentActivitie activities={invoices} />
+        <ContentActivitie activities={dataActivities} />
 
-        <ContentFooterActivitie />
+        <ContentFooterActivitie activities={dataActivities} />
       </div>
     </>
   );

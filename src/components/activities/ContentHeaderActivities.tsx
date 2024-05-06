@@ -3,8 +3,15 @@ import ContainerContentHeaderActivities from "./ContainerContentHeaderActivities
 import { IoIosSearch } from "react-icons/io";
 import ModalFilterActivitie from "./ModalFilterActivitie";
 import ModalAddActivitie from "./ModalAddActivitie";
+import { FC } from "react";
 
-const ContentHeaderActivities = () => {
+interface ContentHeaderActivities {
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ContentHeaderActivities: FC<ContentHeaderActivities> = ({
+  setSearch,
+}) => {
   return (
     <div className="flex flex-col items-center justify-between py-5 sm:flex-row">
       <ContainerContentHeaderActivities>
@@ -16,7 +23,11 @@ const ContentHeaderActivities = () => {
           <div>
             <IoIosSearch />
           </div>
-          <input type="text" className="outline-none" />
+          <input
+            type="text"
+            className="outline-none"
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
 
         <ModalFilterActivitie />

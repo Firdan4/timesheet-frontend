@@ -1,5 +1,3 @@
-import React, { FC } from "react";
-import { Activitie } from "@/type";
 import {
   Table,
   TableBody,
@@ -9,9 +7,12 @@ import {
 } from "../ui/table";
 import ContentActivitieTableHeader from "./ContentActivitieTableHeader";
 import ContentActivitiTableContent from "./ContentActivitiTableContent";
+import { z } from "zod";
+import { activitieSchema } from "@/schema/activities";
+import { FC } from "react";
 
 interface ContentActivitieProps {
-  activities: Activitie[];
+  activities: z.infer<typeof activitieSchema>[];
 }
 
 const ContentActivitie: FC<ContentActivitieProps> = ({ activities }) => {
@@ -25,11 +26,11 @@ const ContentActivitie: FC<ContentActivitieProps> = ({ activities }) => {
           {activities.length ? (
             activities.map((item) => (
               <ContentActivitiTableContent
-                key={item.activitiName}
-                activitiName={item.activitiName}
+                key={item.activitieName}
+                activitiName={item.activitieName}
                 dateEnd={item.dateEnd}
                 dateStart={item.dateStart}
-                duration={item.duration}
+                duration={""}
                 projectName={item.projectName}
                 timeEnd={item.timeEnd}
                 timeStart={item.timeStart}
