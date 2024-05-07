@@ -7,15 +7,18 @@ import {
 } from "../ui/table";
 import ContentActivitieTableHeader from "./ContentActivitieTableHeader";
 import ContentActivitiTableContent from "./ContentActivitiTableContent";
-import { z } from "zod";
-import { activitieSchema } from "@/schema/activities";
 import { FC } from "react";
+import { Activitie } from "@/type";
 
 interface ContentActivitieProps {
-  activities: z.infer<typeof activitieSchema>[];
+  activities: Activitie[];
+  handleActionActivitie: (id: number | string, type: string) => void;
 }
 
-const ContentActivitie: FC<ContentActivitieProps> = ({ activities }) => {
+const ContentActivitie: FC<ContentActivitieProps> = ({
+  activities,
+  handleActionActivitie,
+}) => {
   return (
     <div className="relative rounded-lg min-h-[30vh] max-h-[31vh] overflow-auto">
       <Table className="overflow-scroll relative">
@@ -26,14 +29,16 @@ const ContentActivitie: FC<ContentActivitieProps> = ({ activities }) => {
           {activities.length ? (
             activities.map((item) => (
               <ContentActivitiTableContent
-                key={item.activitieName}
-                activitiName={item.activitieName}
+                key={item.id}
+                id={item.id}
+                activitieName={item.activitieName}
                 dateEnd={item.dateEnd}
                 dateStart={item.dateStart}
                 duration={""}
                 projectName={item.projectName}
                 timeEnd={item.timeEnd}
                 timeStart={item.timeStart}
+                handleActionActivitie={handleActionActivitie}
               />
             ))
           ) : (

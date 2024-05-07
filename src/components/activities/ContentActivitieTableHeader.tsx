@@ -11,7 +11,7 @@ const ContentActivitieTableHeader = () => {
       <TableHead className="">Waktu Mulai</TableHead>
       <TableHead className="">Waktu Berakhir</TableHead>
       <TableHead className="">Durasi</TableHead>
-      <TableHead className="">Aksi</TableHead>
+      <TableHead className="text-center">Aksi</TableHead>
     </TableRow>
   );
 };

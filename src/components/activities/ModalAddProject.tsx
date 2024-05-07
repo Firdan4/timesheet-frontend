@@ -37,7 +37,7 @@ export const ModalAddProject: FC<ModalAddProject> = ({
       <DialogContent>
         <DialogHeader className="flex flex-col gap-5">
           <DialogHeader>
-            <DialogTitle>Tambah Kegiatan Baru</DialogTitle>
+            <DialogTitle>Tambah Proyek Baru</DialogTitle>
             <span className="flex w-full h-[1px] bg-gray-300" />
           </DialogHeader>
 

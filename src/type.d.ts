@@ -1,5 +1,6 @@
 export type Activitie = {
-  activitiName: string;
+  id: number | string;
+  activitieName: string;
   projectName: string;
   dateStart: string;
   dateEnd: string;
