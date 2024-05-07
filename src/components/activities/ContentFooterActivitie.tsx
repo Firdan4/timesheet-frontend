@@ -6,20 +6,22 @@ import { calculateTotal } from "@/lib/utils";
 
 interface ContentFooterActivitieProps {
   activities: z.infer<typeof activitieSchema>[];
+  rate: number;
 }
 
 const ContentFooterActivitie: FC<ContentFooterActivitieProps> = ({
   activities,
+  rate,
 }) => {
   return (
     <div className="flex flex-col gap-2 bg-new-background-page rounded-b-lg w-full py-3">
       <ContainerContentFooterActivitie className="text-sm ">
         <p>Total durasi</p>
-        <div>{calculateTotal(activities, 12000).totalDuration}</div>
+        <div>{calculateTotal(activities, rate).totalDuration}</div>
       </ContainerContentFooterActivitie>
       <ContainerContentFooterActivitie className="font-semibold">
         <p>Total Pendapatan</p>
-        <div>{calculateTotal(activities, 12000).totalIncome}</div>
+        <div>{calculateTotal(activities, rate).totalIncome}</div>
       </ContainerContentFooterActivitie>
     </div>
   );

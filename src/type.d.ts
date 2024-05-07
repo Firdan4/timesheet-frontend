@@ -8,6 +8,11 @@ export type Activitie = {
   timeEnd: string;
   duration: string;
 };
+export type Employee = {
+  id: number | string;
+  name: string;
+  rate: string;
+};
 
 export type OptionTypes = {
   label: string;

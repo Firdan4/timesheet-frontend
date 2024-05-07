@@ -9,11 +9,14 @@ import {
 import { useState } from "react";
 import { useDebounce } from "@/utils/useDebounce";
 import ModalEditActivitie from "@/components/activities/ModalEditActivitie";
-import { Activitie } from "@/type";
+import { Activitie, Employee } from "@/type";
 import Swal from "sweetalert2";
+import { useQuerySettings } from "@/hooks/useSettings";
+import { formatIdr } from "@/lib/utils";
 
 export const Activities = () => {
   const { useGetActivities } = useQueryActivities();
+  const { useGetEmployee } = useQuerySettings();
   const { deleteActivitie } = useMutationActivities();
 
   const [dataActivities, setDataActivities] = useState<Activitie[]>([]);
@@ -21,11 +24,15 @@ export const Activities = () => {
     useState<boolean>(false);
   const [idActivitie, setIdActivitie] = useState<number | string>("");
 
+  const [employee, setEmployee] = useState<Employee | undefined>();
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search, 500);
 
   // query get activities
   useGetActivities(setDataActivities, debounceSearch);
+
+  // query get employee
+  useGetEmployee(setEmployee);
 
   const handleActionActivitie = (id: number | string, type: string) => {
     if (type === "Delete") {
@@ -68,8 +75,14 @@ export const Activities = () => {
       />
 
       <div className="flex gap-20 w-full bg-white rounded-t-xl p-5">
-        <HeaderActivities label="Nama Karyawan" content="Heru Firdan" />
-        <HeaderActivities label="Rate" content="Rp. 12,000/jam" />
+        <HeaderActivities
+          label="Nama Karyawan"
+          content={employee ? employee.name : ""}
+        />
+        <HeaderActivities
+          label="Rate"
+          content={`${employee ? formatIdr(employee?.rate || "0") : ""} / jam`}
+        />
       </div>
       <div className="flex flex-col gap-2 w-full bg-white rounded-b-xl p-5 h-full">
         <ContentHeaderActivities setSearch={setSearch} />
@@ -79,7 +92,10 @@ export const Activities = () => {
           handleActionActivitie={handleActionActivitie}
         />
 
-        <ContentFooterActivitie activities={dataActivities} />
+        <ContentFooterActivitie
+          activities={dataActivities}
+          rate={employee ? parseFloat(employee?.rate) : 0}
+        />
       </div>
     </>
   );

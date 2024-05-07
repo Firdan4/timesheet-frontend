@@ -27,9 +27,7 @@ const useMutationActivities = () => {
         });
       },
       onError: (error) => {
-        // Handle error, for example showing an error message
         console.error("Error creating activity:", error);
-        // return error
       },
     }
   );

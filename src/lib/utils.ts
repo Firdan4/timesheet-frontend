@@ -60,3 +60,10 @@ export const calculateTotal = (
 
   return { totalDuration, totalIncome: formatTotalIncome };
 };
+
+export const formatIdr = (number: number | string): string => {
+  return Number(number).toLocaleString("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  });
+};
